@@ -58,9 +58,13 @@ public class TripServiceTest {
     @Test
     void getTripsByLoggedInUserTest() {
         // given
+        TripService tripService = new TripServiceForTest(tripList);
 
         // when
+        user.addFriend(loggedUser);
+
         // then
+        assertEquals(tripList.size(), tripService.getTripsByUser(user, loggedUser).size());
     }
 
     private class TripServiceForTest extends TripService {
