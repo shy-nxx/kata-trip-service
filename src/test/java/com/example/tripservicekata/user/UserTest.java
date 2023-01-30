@@ -35,9 +35,24 @@ public class UserTest {
 
         // when
         loggedUser.addTrip(trip);
-        
+
         // then
         assertEquals(1, loggedUser.trips().size());
+    }
+
+    @DisplayName("친구인지 확인하기")
+    @Test
+    void checkFriendByUser() {
+        // given
+        User friend = new User();
+        User notFriend = new User();
+
+        // when
+        loggedUser.addFriend(friend);
+
+        // then
+        assertEquals(true, loggedUser.findFriendByUser(friend));
+        assertEquals(false, loggedUser.findFriendByUser(notFriend));
     }
 }
 
