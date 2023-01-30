@@ -17,6 +17,7 @@ import java.util.List;
 
 public class TripServiceTest {
 
+
     @InjectMocks
     private UserSession userSession = new UserSession();
 
@@ -24,7 +25,7 @@ public class TripServiceTest {
     private List<Trip> tripList = new ArrayList<>();
 
     @Mock
-    private User notUser = null;
+    private User user = new User();
 
 
     @BeforeEach
@@ -39,28 +40,25 @@ public class TripServiceTest {
     @Test
     void userNotLoggedExceptionTest() {
         // given
+        TripService tripService = new TripServiceForTest(tripList);
 
         // when
-
         // then
-
-        TripService tripService = new TripServiceForTest(userSession, tripList);
-        Assertions.assertThrows(UserNotLoggedInException.class, () -> { tripService.getTripsByUser(notUser); });
+        Assertions.assertThrows(UserNotLoggedInException.class, () -> { tripService.getTripsByUser(user, null); });
     }
 
     @DisplayName("친구와 함께 떠난 여행이 아니면 조회 안됨")
     @Test
     void getTripsByNotFriendTest() {
-        /* 친구들과 떠난게 아니면 아무것도 조회되면 안됨 */
 
         User logInUser = new User();
-        logInUser.addFriend(new User());
+        logInUser.addFriend(user);
         logInUser.addTrip(tripList.get(0));
         logInUser.addTrip(tripList.get(tripList.size()-1));
 
-        TripService tripService = new TripServiceForTest(userSession, tripList);
+        TripService tripService = new TripServiceForTest(tripList);
 
-        assertEquals(0, tripService.getTripsByUser(logInUser).size());
+        assertEquals(0, tripService.getTripsByUser(user, logInUser).size());
 
     }
 
@@ -68,9 +66,8 @@ public class TripServiceTest {
 
         private List<Trip> tripRslt;
 
-        public TripServiceForTest(UserSession userSession,
-                                  List<Trip> tripRslt) {
-            super(userSession);
+        public TripServiceForTest(List<Trip> tripRslt) {
+            super();
             this.tripRslt = tripRslt;
         }
 
