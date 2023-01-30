@@ -27,12 +27,16 @@ public class TripService {
 				}
 			}
 			if (isFriend) {
-				tripList = TripDAO.findTripsByUser(user);
+				tripList = getTripsByUserFromDb(user);
 			}
 			return tripList;
 		} else {
 			throw new UserNotLoggedInException();
 		}
 	}
-	
+
+	protected List<Trip> getTripsByUserFromDb(User user) {
+		return TripDAO.findTripsByUser(user);
+	}
+
 }

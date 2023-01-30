@@ -5,6 +5,7 @@ import com.example.tripservicekata.trip.Trip;
 import com.example.tripservicekata.trip.TripDAO;
 import com.example.tripservicekata.user.User;
 import com.example.tripservicekata.user.UserSession;
+import org.springframework.boot.SpringApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,10 @@ public class TripService_Original {
 		} else {
 			throw new UserNotLoggedInException();
 		}
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(TripService_Original.class, args);
 	}
 
 }

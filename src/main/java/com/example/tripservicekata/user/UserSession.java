@@ -8,5 +8,4 @@ public class UserSession {
 		throw new CollaboratorCallException(
 				"UserSession.getLoggedUser() should not be called in an unit test");
 	}
-
 }
