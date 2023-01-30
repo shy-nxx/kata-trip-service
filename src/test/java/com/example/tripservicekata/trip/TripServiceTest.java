@@ -2,24 +2,18 @@ package com.example.tripservicekata.trip;
 
 import com.example.tripservicekata.exception.UserNotLoggedInException;
 import com.example.tripservicekata.user.User;
-import com.example.tripservicekata.user.UserSession;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TripServiceTest {
-
-
-    @InjectMocks
-    private UserSession userSession = new UserSession();
 
     @Mock
     private List<Trip> tripList = new ArrayList<>();
@@ -27,6 +21,8 @@ public class TripServiceTest {
     @Mock
     private User user = new User();
 
+    @Mock
+    private User loggedUser = new User();
 
     @BeforeEach
     void init() {
@@ -50,16 +46,21 @@ public class TripServiceTest {
     @DisplayName("친구와 함께 떠난 여행이 아니면 조회 안됨")
     @Test
     void getTripsByNotFriendTest() {
-
-        User logInUser = new User();
-        logInUser.addFriend(user);
-        logInUser.addTrip(tripList.get(0));
-        logInUser.addTrip(tripList.get(tripList.size()-1));
-
+        // given
         TripService tripService = new TripServiceForTest(tripList);
 
-        assertEquals(0, tripService.getTripsByUser(user, logInUser).size());
+        // when
+        // then
+        assertEquals(0, tripService.getTripsByUser(user, loggedUser).size());
+    }
 
+    @DisplayName("친구와 함께 떠난 여행 조회하기")
+    @Test
+    void getTripsByLoggedInUserTest() {
+        // given
+
+        // when
+        // then
     }
 
     private class TripServiceForTest extends TripService {
